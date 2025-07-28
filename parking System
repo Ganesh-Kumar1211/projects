@@ -1,1 +1,151 @@
+package Parkingtask;
+import java.util.*;
+package Parkingtask;
+
+public class Vechicle {
+    private int slotid;
+    private String name;
+    private int vecno;
+
+    public int getSlotid() {
+        return slotid;
+    }
+
+    public void setSlotid(int slotid) {
+        this.slotid = slotid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getVecno() {
+        return vecno;
+    }
+
+    public void setVecno(int vecno) {
+        this.vecno = vecno;
+    }}
+
+    public class Parkingmgmt {
+        List<Vechicle> vechicleList=new ArrayList<>();
+        int maxslots=5;
+        boolean[] slot =new boolean[maxslots];
+
+        public String park()
+        {
+            Vechicle vechicle=new Vechicle();
+            Scanner vecinfo=new Scanner(System.in);
+
+            System.out.println("enter slot no:(1 to" +maxslots+ ");");
+            int sl=vecinfo.nextInt();
+            vechicle.setSlotid(sl);
+            vecinfo.nextLine();
+
+            if (sl < 1 || sl > maxslots) {
+                return " invalid slot no" + maxslots;
+            }
+            if (slot[sl - 1]) {
+                return " already occupied ";
+            }
+
+            System.out.println("enter vec name: ");
+            String vename=vecinfo.nextLine();
+            vechicle.setName(vename);
+
+            System.out.println("enter vec no: ");
+            int veno=vecinfo.nextInt();
+            vechicle.setVecno(veno);
+
+            vechicle.setSlotid(sl);
+            vechicleList.add(vechicle);
+            slot[sl - 1] = true;
+
+         return "vehicle parked successful in slot "+sl+"available slots:"+getAvailableSlotCount();
+        }
+
+        public void view() {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Enter vehicle number to search: ");
+            int inputVecNo = scanner.nextInt();
+
+            boolean found = false;
+
+            for (Vechicle v : vechicleList) {
+                if (v.getVecno() == inputVecNo) {
+                    System.out.println("Slot ID: " + v.getSlotid());
+                    System.out.println("Vehicle No: " + v.getVecno());
+                    System.out.println("Vehicle Name: " + v.getName());
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                System.out.println("Vehicle not found.");
+            }}
+            public void showSlotAvailability() {
+                System.out.println("Slot Availability:");
+                for (int i = 0; i < maxslots; i++) {
+                    String status = slot[i] ? "Occupied" : "Available";
+                    System.out.println("Slot " + (i + 1) + ": " + status);
+                }
+                System.out.println("available slots:"+getAvailableSlotCount());
+                }
+
+                private int getAvailableSlotCount() {
+                 int count = 0;
+                   for (boolean s : slot) {
+                      if (!s) count++;
+                  }
+                   return count;
+        }
+
+        public static void main(String[] args) {
+
+            Parkingmgmt parking = new Parkingmgmt();
+            boolean run = false;
+
+            while (run) {
+                System.out.println("park vechicle..enter 'park' ");
+                System.out.println("show vechicle..enter 'view' ");
+                System.out.println("exit vechicle..enter 'exit' ");
+                System.out.println("view slots availability... enter 'slots' ");
+            }
+
+                Scanner sc = new Scanner(System.in);
+                String option = sc.nextLine().toLowerCase();
+
+                switch (option) {
+                    case "park":
+                        System.out.println(parking.park());
+                        break;
+
+                    case "view":
+                        parking.view();
+                        break;
+
+                    case "exit":
+                        run = false;
+                        break;
+
+                    case "slots":
+                        parking.showSlotAvailability();
+                        break;
+                        default:
+                        System.out.println("no choice matched..");
+                        break;
+
+                }
+
+            }
+
+    }
+
+
 
